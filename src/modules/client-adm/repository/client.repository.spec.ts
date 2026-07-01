@@ -1,16 +1,16 @@
-import { Sequelize } from "sequelize-typescript";
-import Id from "../../@shared/domain/value-object/id.value-object";
-import Client from "../domain/client.entity";
-import { ClientModel } from "./client.model";
-import ClientRepository from "./client.repository";
+import { Sequelize } from 'sequelize-typescript';
+import Id from '../../@shared/domain/value-object/id.value-object';
+import Client from '../domain/client.entity';
+import { ClientModel } from './client.model';
+import ClientRepository from './client.repository';
 
-describe("ClientRepository test", () => {
+describe('ClientRepository test', () => {
   let sequelize: Sequelize;
 
   beforeEach(async () => {
     sequelize = new Sequelize({
-      dialect: "sqlite",
-      storage: ":memory:",
+      dialect: 'sqlite',
+      storage: ':memory:',
       logging: false,
       sync: { force: true },
     });
@@ -23,18 +23,18 @@ describe("ClientRepository test", () => {
     await sequelize.close();
   });
 
-  it("should create a client", async () => {
+  it('should create a client', async () => {
     const client = new Client({
-      id: new Id("1"),
-      name: "Client 1",
-      email: "x@x.com",
-      address: "Address 1",
+      id: new Id('1'),
+      name: 'Client 1',
+      email: 'x@x.com',
+      address: 'Address 1',
     });
 
     const repository = new ClientRepository();
     await repository.add(client);
 
-    const clientDb = await ClientModel.findOne({ where: { id: "1" } });
+    const clientDb = await ClientModel.findOne({ where: { id: '1' } });
 
     expect(clientDb).toBeDefined();
     expect(clientDb.id).toBe(client.id.id);
@@ -45,12 +45,12 @@ describe("ClientRepository test", () => {
     expect(clientDb.updatedAt).toStrictEqual(client.updatedAt);
   });
 
-  it("should find a client", async () => {
+  it('should find a client', async () => {
     const client = await ClientModel.create({
-      id: "1",
-      name: "Client 1",
-      email: "x@x.com",
-      address: "Address 1",
+      id: '1',
+      name: 'Client 1',
+      email: 'x@x.com',
+      address: 'Address 1',
       createdAt: new Date(),
       updatedAt: new Date(),
     });
